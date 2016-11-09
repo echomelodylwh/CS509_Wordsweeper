@@ -18,15 +18,15 @@ public class Board {
 		size = 7;
 		for(int c = 1; c<=size;c++){
 			for(int r =1; r<=size; r++){
-				Cell cell = new Cell();
+                Location loc = new Location(c,r);
+                Cell cell = new Cell(loc);
 				cell.getLetter();
-				cell.location.setColumn(c);
-				cell.location.setRow(r);
-				Location l = new Location(c,r);
 				coordination.add(l);
 				table.put(l, cell);	
 			}
 		}
+        
+    
 	}
 	
 	public Board(int size) {
@@ -90,6 +90,17 @@ public class Board {
 	}
 	
 	
+	
+	
+	
+	
 
+
+
+
+
+
+	
+	
 
 }
