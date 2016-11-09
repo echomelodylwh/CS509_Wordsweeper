@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-import server.util.Letters;
-import server.util.WordTable;
+import util.Letters;
+import util.Location;
+import util.WordTable;
 
 
 public class Game {
@@ -130,4 +131,20 @@ public class Game {
 		return score;
 	}
 	
+	public Location rePosition(Player p, int c, int r){
+		int x = p.getPlayerLocation().getColumn() + c;
+		int y = p.getPlayerLocation().getRow() + r;
+		Boolean isOverColumn = x>board.getSize()-3 || x<1;
+		Boolean isOverRow = y>board.getSize()-3 || y<1;
+		if(!(isOverColumn || isOverRow)){
+			Location loc = new Location(x,y); 
+			p.setPlayerLocation(loc);
+			}
+		return p.getPlayerLocation();
+	}
+
+	
 }
+	
+	
+

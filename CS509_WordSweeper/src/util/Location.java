@@ -1,4 +1,4 @@
-package server.util;
+package util;
 
 public class Location {
 	int column;

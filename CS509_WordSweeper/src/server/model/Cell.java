@@ -2,8 +2,8 @@ package server.model;
 
 import java.util.LinkedList;
 
-import server.util.Letters;
-import server.util.Location;
+import util.Letters;
+import util.Location;
 
 
 public class Cell {
@@ -14,6 +14,15 @@ public class Cell {
 	
 	
 	
+	
+	public Cell(Location location) {
+		super();
+		this.location = location;
+		this.letter = Letters.chooseLetter();
+		this.seleted = false;
+	}
+
+
 	public Location getPosition(){
 		return this.location;
 	}

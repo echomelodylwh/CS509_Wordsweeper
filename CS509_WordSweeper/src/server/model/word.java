@@ -2,8 +2,8 @@ package server.model;
 
 import java.util.ArrayList;
 import server.model.Game;
-import server.util.Letters;
-import server.util.WordTable;
+import util.Letters;
+import util.WordTable;
 
 
 

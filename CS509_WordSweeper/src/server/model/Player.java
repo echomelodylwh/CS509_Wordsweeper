@@ -3,7 +3,7 @@ package server.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import server.util.Location;
+import util.Location;
 
 
 
@@ -33,14 +33,10 @@ public class Player {
 		return new Location(x,y);
 	}
 	
-	public Location rePosition(int c, int r){ //需解决越界的问题
-		
-		int x = this.location.getColumn() + c;
-		int y = this.location.getRow() + r;
-		Location p = new Location(x,y);
-		this.location = p;
-		return this.location;
-	}
+	public void setPlayerLocation(Location loc){
+		this.location = loc;
+		}
+
 	
 	public Location getPlayerLocation(){
 		return this.location;

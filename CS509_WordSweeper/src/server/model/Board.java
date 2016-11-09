@@ -5,12 +5,11 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Stack;
 
-import server.util.Location;
+import util.Location;
 
 public class Board {
 	
 	int size;
-	Collection< Location> coordination;
 	Hashtable<Location, Cell> table; 
 	
 	public Board() {
@@ -21,8 +20,7 @@ public class Board {
                 Location loc = new Location(c,r);
                 Cell cell = new Cell(loc);
 				cell.getLetter();
-				coordination.add(l);
-				table.put(l, cell);	
+				table.put(loc, cell);	
 			}
 		}
         
@@ -33,13 +31,10 @@ public class Board {
 		super();
 		for(int c = 1; c<=size;c++){
 			for(int r =1; r<=size; r++){
-				Cell cell = new Cell();
+				Location loc = new Location(c,r);
+                Cell cell = new Cell(loc);
 				cell.getLetter();
-				cell.location.setColumn(c);
-				cell.location.setRow(r);
-				Location l = new Location(c,r);
-				coordination.add(l);
-				table.put(l, cell);	
+				table.put(loc, cell);
 			}
 		}
 	}
@@ -75,18 +70,22 @@ public class Board {
 	
 	public void refreshBoard(){
 		for(int c = 1; c<=size;c++){
-			List<String> str = new Stack<>(); 
+			int count = 0;
 			for(int r =1; r<=size; r++){
-				
-				if(table.get(Location(c,r)) != null))
-				Cell cell = new Cell();
-				cell.getLetter();
-				cell.location.setColumn(c);
-				cell.location.setRow(r);
-				table.put(new Location(c,r), cell);	
+				Location l = new Location(c,r);
+				if(!table.get(l.hashCode()).hasLetter()){
+					while (!table.get(new Location(c,++r).hashCode()).hasLetter())
+					table.get(l.hashCode()).letter = table.get(new Location(c,r).hashCode()).getLetter();
+					table.get(new Location(c,r).hashCode()).removeLetter();
+					
+					count++;	
+				}			
 			}
-		}
-		
+			for(int x =0; x<count; x++){
+				Location r = new Location(c, size-x);
+				table.get(r.hashCode()).setLetter();
+			}
+		}	
 	}
 	
 	
