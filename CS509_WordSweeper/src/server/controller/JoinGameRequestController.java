@@ -15,14 +15,14 @@ import xml.Message;
 public class JoinGameRequestController implements IProtocolHandler {
 
 	ServerModel model;
-
+	
 	public JoinGameRequestController (ServerModel model) {
 		this.model = model;
 	}
-
+	
 	public Message process(ClientState client, Message request) {
-
-		model.joinGame();
+		
+		model.joinGame(); 
 		Random random=new java.util.Random();
 		String otherPlayers = "";
 		String content =new String("");
@@ -46,16 +46,16 @@ public class JoinGameRequestController implements IProtocolHandler {
 			}
 			otherPlayers += "<player name='player" + i + "' score='0' position='"+ x +","+ y +"' board='"+ player_content +"'/>";
 		}
-
+		
 		// Construct message reflecting state
 		String xmlString = Message.responseHeader(request.id()) +
 				"<boardResponse gameId='hg12jhd' managingUser='player0' bonus='4,3' contents='"+ content +"'>" +
 			      otherPlayers +
 			  "</boardResponse>" +
 			"</response>";
-
+		
 		Message message = new Message (xmlString);
-
+		
 		// all other players on game (excepting this particular client) need to be told of this
 		// same response. Note this is inefficient and should be replaced by more elegant functioning
 		// hint: rely on your game to store player names...

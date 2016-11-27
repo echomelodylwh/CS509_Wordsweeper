@@ -17,19 +17,19 @@ import java.util.Random;
 public class CreateGameRequestController implements IProtocolHandler {
 
 	ServerModel model;
-	String [][] strArray = new String [7][7];
+	
 	public CreateGameRequestController (ServerModel model) {
 		this.model = model;
 	}
-
+	
 	public Message process(ClientState client, Message request) {
-
+		
 		model.joinGame();  // HACK.
-
+		
 		// note you can retrieve information from the request...
 		Node createRequest = request.contents.getFirstChild();
 		NamedNodeMap map = createRequest.getAttributes();
-
+		
 		String pname = map.getNamedItem("name").getNodeValue();
 		Random random=new java.util.Random();
 		//String [][] strArray = new String [7][7];
@@ -40,16 +40,16 @@ public class CreateGameRequestController implements IProtocolHandler {
 			for(int j=0;j<7;j++)
 			{
 				temp = String.valueOf((char)(random.nextInt(26)+65));
-				strArray[i][j] = temp;
+				model.setstrArray(i, j, temp);
 			}
-
+			
 		}
-
+		
 		for(int i=0;i<7;i++)
 		{
 			for(int j=0;j<7;j++)
 			{
-				content = content + strArray[i][j];
+				content = content + model.getstrArray(i, j);
 			}
 		}
 		int x = random.nextInt(3);
@@ -59,7 +59,7 @@ public class CreateGameRequestController implements IProtocolHandler {
 		{
 			for(int j=x;j<x+4;j++)
 			{
-				player_content += strArray[i][j];
+				player_content += model.getstrArray(i, j);
 			}
 		}
 		// Construct message reflecting state
@@ -68,7 +68,7 @@ public class CreateGameRequestController implements IProtocolHandler {
 			      "<player name='" + pname + "' score='0' position='"+ x +","+ y +"' board='"+ player_content +"'/>" +
 			  "</boardResponse>" +
 			"</response>";
-
+		
 		// send this response back to the client which sent us the request.
 		return new Message (xmlString);
 	}
